@@ -16,3 +16,12 @@ if(process.env.NODE_ENV == 'dev'){
 
 process.env.URLDB = urlDB;
 
+
+// TOKEN exp
+process.env.TOKEN_EXP = 60*60*24*30;
+
+
+// SED Auth
+
+process.env.SEED = process.env.SEED || 'seed-dev';
+

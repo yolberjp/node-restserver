@@ -1,5 +1,6 @@
 const express = require('express');
 const User = require('../models/user');
+const {tokenVerify, adminRoleVerify} = require('../middlewares/auth');
 
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
@@ -9,7 +10,8 @@ const app = express();
 
 
 // GET
-app.get('/users', function (req, res) {
+app.get('/users', [tokenVerify], (req, res)=>{
+
     
     let start = req.query.start || 0;
     start = Number(start);
@@ -45,7 +47,7 @@ app.get('/users', function (req, res) {
   
   
   // POST
-app.post('/user', function(req, res){
+app.post('/user', [tokenVerify, adminRoleVerify], (req, res)=>{
 
     let body = req.body;
 
@@ -75,7 +77,7 @@ app.post('/user', function(req, res){
   
   
   // PUT
-  app.put('/user/:id', function (req, res) {
+  app.put('/user/:id', [tokenVerify, adminRoleVerify], (req, res)=>{
   
       let id = req.params.id;
       let body = _.pick(req.body, ['name','email','img','role','estado']);
@@ -100,7 +102,7 @@ app.post('/user', function(req, res){
   
   
   // DELETE
-  app.delete('/user/:id', function (req, res) {
+  app.delete('/user/:id', [tokenVerify, adminRoleVerify], (req, res)=>{
 
     let id = req.params.id;
 
